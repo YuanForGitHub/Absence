@@ -35,6 +35,7 @@ public class ApplyController {
 		apply.setEndTime(request.getParameter("endTime"));
 		apply.setReason(request.getParameter("reason"));
 		apply.setOther(request.getParameter("other"));
+		apply.setPhone(request.getParameter("phone"));
 		
 		// 将applyBean传参给service层
 		if(applyService.insert(apply)) {

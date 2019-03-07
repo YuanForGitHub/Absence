@@ -12,16 +12,6 @@
 
 <mapper namespace="Apply">
 
-	<resultMap type="ApplyAlias" id="ApplyResult">
-		<id column="applyId" jdbcType="INTEGER" property="id" />
-		<result column="activity" jdbcType="VARCHAR"
-			property="username" />
-		<result column="department" jdbcType="VARCHAR"
-			property="password.encrypted" />
-		<result column="administrator" jdbcType="BOOLEAN"
-			property="administrator" />
-	</resultMap>
-
 	<insert id="doCreate" parameterType="ApplyAlias"
 		useGeneratedKeys="false">
 		INSERT INTO apply
@@ -29,6 +19,7 @@
 		department,
 		job,
 		name,
+		phone,
 		startTime,
 		endTime,
 		reason,
@@ -40,6 +31,7 @@
 		#{department,jdbcType=VARCHAR},
 		#{job,jdbcType=VARCHAR},
 		#{name,jdbcType=VARCHAR},
+		#{phone,jdbcType=VARCHAR},
 		#{startTime,jdbcType=TIMESTAMP},
 		#{endTime,jdbcType=TIMESTAMP},
 		#{reason,jdbcType=VARCHAR},
@@ -49,14 +41,19 @@
 
 	<select id="doSelect" parameterType="int"
 		resultType="ApplyAlias">
-		SELECT activity,
+		SELECT applyId, 
+		activity,
 		department,
 		job,
 		name,
+		phone,
 		startTime,
 		endTime,
 		reason,
-		other FROM apply WHERE applyId = #{applyId,jdbcType=INTEGER}
+		other,
+		created_at,
+		isPass, 
+		description FROM apply WHERE applyId = #{applyId,jdbcType=INTEGER}
 	</select>
 
 	<delete id="doDelete" parameterType="int">
