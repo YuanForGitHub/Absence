@@ -23,7 +23,7 @@ public class ApplyDao {
 	/**
 	 * 添加申请信息
 	 */
-	public boolean doCreate(ApplyBean apply) {
+	public int doCreate(ApplyBean apply) {
 //		String JDBC_DRIVER = "com.mysql.jdbc.Driver";
 //		String DB_URL = "jdbc:mysql://localhost:3306/absence?useUnicode=true&characterEncoding=UTF-8";
 //		String USER = "root";
@@ -31,21 +31,21 @@ public class ApplyDao {
 
 		DBAccess dbAccess = new DBAccess();
 		SqlSession sqlSession = null;
+		int result = 0;
+		
 		try {
 			sqlSession = dbAccess.getSqlSession();
 			// 通过sqlsession执行SQL语句
-			sqlSession.insert("Apply.doCreate", apply);
+			result = sqlSession.insert("Apply.doCreate", apply);
 		} catch (Exception e) {
 			System.out.println("ApplyDao has an error:" + e);
 			System.out.println(apply.toString());
-			
-			return false;
 		} finally {
 			if (sqlSession != null) {
 				sqlSession.close();
 			}
 		}
-		return true;
+		return result;
 
 //		Connection conn = null;
 //		PreparedStatement stmt = null;
@@ -89,5 +89,52 @@ public class ApplyDao {
 //		}
 //
 //		return false;
+	}
+
+	public ApplyBean doSelect(String applyId) {
+		DBAccess dbAccess = new DBAccess();
+		SqlSession sqlSession = null;
+		ApplyBean apply = null;
+		
+		try {
+			// 获取数据库连接会话
+			sqlSession = dbAccess.getSqlSession();
+			// 通过sqlsession执行SQL语句
+			apply = sqlSession.selectOne("Apply.doSelect", Integer.valueOf(applyId));
+		} catch (Exception e) {
+			// 打印错误信息
+			System.out.println("ApplyDao has an error:" + e);
+			System.out.println(apply.toString());
+		} finally {
+			// 关闭数据库连接会话
+			if (sqlSession != null) {
+				sqlSession.close();
+			}
+		}
+		
+		return apply;
+	}
+	
+	public int doDelete(String applyId) {
+		DBAccess dbAccess = new DBAccess();
+		SqlSession sqlSession = null;
+		int result = 0;
+		
+		try {
+			// 获取数据库连接会话
+			sqlSession = dbAccess.getSqlSession();
+			// 通过sqlsession执行SQL语句
+			result = sqlSession.delete("Apply.doDelete", Integer.valueOf(applyId));
+		} catch (Exception e) {
+			// 打印错误信息
+			System.out.println("ApplyDao has an error:" + e);
+		} finally {
+			// 关闭数据库连接会话
+			if (sqlSession != null) {
+				sqlSession.close();
+			}
+		}
+		
+		return result;
 	}
 }

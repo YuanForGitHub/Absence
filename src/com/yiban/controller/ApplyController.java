@@ -19,9 +19,9 @@ public class ApplyController {
 //	ApplyService applyService;
 //	@Autowired
 //	ApplyBean apply;
-	
-	@RequestMapping(value="/apply", method=RequestMethod.POST)
+
 	@ResponseBody
+	@RequestMapping(value="/apply", method=RequestMethod.POST)
 	public ResultBean create(HttpServletRequest request) {
 		ApplyService applyService = new ApplyService();
 		ApplyBean apply = new ApplyBean();
@@ -42,6 +42,43 @@ public class ApplyController {
 		}
 		else {
 			return ResultBean.error("插入失败");
-		} 
+		}
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/apply", method=RequestMethod.DELETE)
+	public ResultBean delete(HttpServletRequest request) {
+		
+		ApplyService applyService = new ApplyService();
+		
+		// service层删除apply
+		String applyId = request.getParameter("applyId");
+		ApplyBean apply = applyService.delete(applyId);
+		
+		// 返回操作信息
+		if(apply != null) {
+			return ResultBean.success().add("apply", apply);
+		}
+		else {
+			return ResultBean.error("删除失败");
+		}
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/apply", method=RequestMethod.GET)
+	public ResultBean select(HttpServletRequest request) {
+		ApplyService applyService = new ApplyService();
+		
+		// 查询apply
+		String applyId = request.getParameter("applyId");
+		ApplyBean apply = applyService.select(applyId);
+		
+		// 返回操作信息
+		if(apply != null) {
+			return ResultBean.success().add("apply", apply);
+		}
+		else {
+			return ResultBean.error("查询失败");
+		}
 	}
 }

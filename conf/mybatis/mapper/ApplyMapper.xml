@@ -13,7 +13,7 @@
 <mapper namespace="Apply">
 
 	<resultMap type="ApplyAlias" id="ApplyResult">
-		<id column="id" jdbcType="INTEGER" property="id" />
+		<id column="applyId" jdbcType="INTEGER" property="id" />
 		<result column="activity" jdbcType="VARCHAR"
 			property="username" />
 		<result column="department" jdbcType="VARCHAR"
@@ -46,5 +46,23 @@
 		#{other,jdbcType=VARCHAR}
 		)
 	</insert>
+
+	<select id="doSelect" parameterType="int"
+		resultType="ApplyAlias">
+		SELECT activity,
+		department,
+		job,
+		name,
+		startTime,
+		endTime,
+		reason,
+		other FROM apply WHERE applyId = #{applyId,jdbcType=INTEGER}
+	</select>
+
+	<delete id="doDelete" parameterType="int">
+		DELETE FROM apply WHERE
+		applyId =
+		#{applyId:INTEGER}
+	</delete>
 
 </mapper>
