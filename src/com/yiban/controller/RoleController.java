@@ -3,6 +3,9 @@ package com.yiban.controller;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -15,7 +18,7 @@ import com.yiban.service.RoleService;
 public class RoleController {
 	
 	@ResponseBody
-	@RequestMapping(value="/role", method=RequestMethod.POST)
+	@PostMapping("/role")
 	public ResultBean create(HttpServletRequest request) {
 		RoleService roleService = new RoleService();
 		RoleBean role = new RoleBean();
@@ -33,7 +36,7 @@ public class RoleController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value="/role", method=RequestMethod.DELETE)
+	@DeleteMapping("/role")
 	public ResultBean deleteById(HttpServletRequest request) {
 		
 		RoleService roleService = new RoleService();
@@ -53,7 +56,7 @@ public class RoleController {
 	
 
 	@ResponseBody
-	@RequestMapping(value="/role", method=RequestMethod.GET)
+	@GetMapping("/role")
 	public ResultBean selectById(HttpServletRequest request) {
 		RoleService roleService = new RoleService();
 		

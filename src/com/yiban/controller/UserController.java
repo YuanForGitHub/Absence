@@ -3,6 +3,9 @@ package com.yiban.controller;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -21,7 +24,7 @@ import com.yiban.service.UserService;
 public class UserController {
 	
 	@ResponseBody
-	@RequestMapping(value="/user", method=RequestMethod.POST)
+	@PostMapping("/user")
 	public ResultBean create(HttpServletRequest request) {
 		UserBean user = new UserBean();
 		UserService userService = new UserService();
@@ -41,7 +44,7 @@ public class UserController {
 	}
 
 	@ResponseBody
-	@RequestMapping(value="/user", method=RequestMethod.DELETE)
+	@DeleteMapping("/user")
 	public ResultBean deleteById(HttpServletRequest request) {
 		UserService userService = new UserService();
 		
@@ -58,7 +61,7 @@ public class UserController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value="/user", method=RequestMethod.GET)
+	@GetMapping("/user")
 	public ResultBean selectById(HttpServletRequest request) {
 		UserService userService = new UserService();
 		

@@ -3,6 +3,8 @@ package com.yiban.controller;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -19,7 +21,7 @@ import com.yiban.service.PermissionService;
 public class PermissionController {
 	
 	@ResponseBody
-	@RequestMapping(value="/permission", method=RequestMethod.POST)
+	@PostMapping("/permission")
 	public ResultBean create(HttpServletRequest request) {
 		PermissionService permissionService = new PermissionService();
 		PermissionBean permission = new PermissionBean();
@@ -36,7 +38,8 @@ public class PermissionController {
 		}
 	}
 	
-	@RequestMapping(value="/permission", method=RequestMethod.DELETE)
+	@ResponseBody
+	@DeleteMapping("/permission")
 	public ResultBean deleteById(HttpServletRequest request) {
 		PermissionService permissionService = new PermissionService();
 		

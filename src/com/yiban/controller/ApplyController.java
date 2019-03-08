@@ -4,6 +4,9 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -21,7 +24,7 @@ public class ApplyController {
 //	ApplyBean apply;
 
 	@ResponseBody
-	@RequestMapping(value="/apply", method=RequestMethod.POST)
+	@PostMapping("/apply")
 	public ResultBean create(HttpServletRequest request) {
 		ApplyService applyService = new ApplyService();
 		ApplyBean apply = new ApplyBean();
@@ -47,7 +50,7 @@ public class ApplyController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value="/apply", method=RequestMethod.DELETE)
+	@DeleteMapping("/apply")
 	public ResultBean deleteById(HttpServletRequest request) {
 		
 		ApplyService applyService = new ApplyService();
@@ -66,7 +69,7 @@ public class ApplyController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value="/apply", method=RequestMethod.GET)
+	@GetMapping("/apply")
 	public ResultBean selectById(HttpServletRequest request) {
 		ApplyService applyService = new ApplyService();
 		
