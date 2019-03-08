@@ -34,5 +34,4 @@ public class ApplyService {
 		return apply;
 	}
 	
-	
 }

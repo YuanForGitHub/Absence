@@ -27,7 +27,8 @@
 		)
 		VALUES
 		(
-		#{activity, jdbcType=VARCHAR},
+		#{activity,
+		jdbcType=VARCHAR},
 		#{department,jdbcType=VARCHAR},
 		#{job,jdbcType=VARCHAR},
 		#{name,jdbcType=VARCHAR},
@@ -41,7 +42,7 @@
 
 	<select id="doSelect" parameterType="int"
 		resultType="ApplyAlias">
-		SELECT applyId, 
+		SELECT applyId,
 		activity,
 		department,
 		job,
@@ -52,14 +53,15 @@
 		reason,
 		other,
 		created_at,
-		isPass, 
-		description FROM apply WHERE applyId = #{applyId,jdbcType=INTEGER}
+		isPass,
+		description FROM
+		apply WHERE applyId = #{applyId,jdbcType=INTEGER}
 	</select>
 
 	<delete id="doDelete" parameterType="int">
 		DELETE FROM apply WHERE
-		applyId =
-		#{applyId:INTEGER}
+		applyId = #{applyId:INTEGER}
 	</delete>
+
 
 </mapper>

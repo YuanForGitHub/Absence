@@ -38,4 +38,17 @@
 		)
 	</insert>
 
+	<select id="doSelect" parameterType="int"
+		resultType="UserAlias">
+		SELECT userId,
+		userName,
+		phone FROM
+		user WHERE userId = #{userId,jdbcType=INTEGER}
+	</select>
+	
+		<delete id="doDelete" parameterType="int">
+		DELETE FROM user WHERE
+		userId = #{userId:INTEGER}
+	</delete>
+
 </mapper>
