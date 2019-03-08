@@ -13,6 +13,10 @@ import com.yiban.bean.UserBean;
 import com.yiban.dao.UserDao;
 import com.yiban.service.UserService;
 
+/**
+ * TODO: 用户密码加密，
+ * 网址：https://hello-nick-xu.iteye.com/blog/2103775
+ */
 @Controller
 public class UserController {
 	
@@ -38,7 +42,7 @@ public class UserController {
 
 	@ResponseBody
 	@RequestMapping(value="/user", method=RequestMethod.DELETE)
-	public ResultBean delete(HttpServletRequest request) {
+	public ResultBean deleteById(HttpServletRequest request) {
 		UserService userService = new UserService();
 		
 		String userId = request.getParameter("userId");
@@ -55,7 +59,7 @@ public class UserController {
 	
 	@ResponseBody
 	@RequestMapping(value="/user", method=RequestMethod.GET)
-	public ResultBean select(HttpServletRequest request) {
+	public ResultBean selectById(HttpServletRequest request) {
 		UserService userService = new UserService();
 		
 		// 查询选定用户

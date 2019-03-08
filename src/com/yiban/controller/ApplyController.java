@@ -48,7 +48,7 @@ public class ApplyController {
 	
 	@ResponseBody
 	@RequestMapping(value="/apply", method=RequestMethod.DELETE)
-	public ResultBean delete(HttpServletRequest request) {
+	public ResultBean deleteById(HttpServletRequest request) {
 		
 		ApplyService applyService = new ApplyService();
 		
@@ -67,7 +67,7 @@ public class ApplyController {
 	
 	@ResponseBody
 	@RequestMapping(value="/apply", method=RequestMethod.GET)
-	public ResultBean select(HttpServletRequest request) {
+	public ResultBean selectById(HttpServletRequest request) {
 		ApplyService applyService = new ApplyService();
 		
 		// 查询apply

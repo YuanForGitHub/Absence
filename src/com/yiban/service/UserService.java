@@ -1,8 +1,11 @@
 package com.yiban.service;
 
+import org.springframework.stereotype.Service;
+
 import com.yiban.bean.UserBean;
 import com.yiban.dao.UserDao;
 
+@Service
 public class UserService {
 	
 	public boolean insert(UserBean user) {
