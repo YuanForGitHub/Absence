@@ -4,12 +4,26 @@ import org.springframework.stereotype.Service;
 
 import com.yiban.bean.UserBean;
 import com.yiban.dao.UserDao;
+import com.yiban.util.Encrypt;
 
 @Service
 public class UserService {
 	
+	public static final String KEY_MD5 = "MD5";
+	
 	public boolean insert(UserBean user) {
 		UserDao userDao = new UserDao();
+		
+		// 加密用户密码
+		String password = Encrypt.EncoderByMd5(user.getPassword());
+		
+		if(password == null) {
+			return false;
+		}
+		
+		// 设置用户密码
+		user.setPassword(password);
+		// 执行插入
 		return userDao.doCreate(user)>0 ? true : false;
 	}
 	

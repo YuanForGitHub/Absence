@@ -47,4 +47,16 @@
 
 	<mvc:annotation-driven></mvc:annotation-driven>
 	<mvc:default-servlet-handler />
+
+	<!-- mvc拦截器 -->
+	<!-- <mvc:interceptors>
+		<mvc:interceptor>
+			拦截指定接口
+			<mvc:mapping path="/**" />
+			排除拦截接口
+			<mvc:exclude-mapping path="/users/login" />
+			拦截器位置
+			<bean class="com.isoft.interceptor.TokenInterceptor"></bean>
+		</mvc:interceptor>
+	</mvc:interceptors> -->
 </beans>

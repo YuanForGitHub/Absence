@@ -39,7 +39,7 @@ public class UserController {
 			return ResultBean.success().add("user", user);
 		}
 		else {
-			return ResultBean.error("插入失败");
+			return ResultBean.error("用户添加失败");
 		}
 	}
 
