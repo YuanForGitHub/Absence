@@ -20,12 +20,11 @@
 	</settings>
 
 	<typeAliases>
-		<typeAlias alias="ApplyAlias"
-			type="com.yiban.bean.ApplyBean" />
 		<typeAlias alias="UserAlias" type="com.yiban.bean.UserBean" />
 		<typeAlias alias="RoleAlias" type="com.yiban.bean.RoleBean" />
-		<typeAlias alias="PermissionAlias"
-			type="com.yiban.bean.PermissionBean" />
+		<typeAlias alias="ApplyAlias" type="com.yiban.bean.ApplyBean" />
+		<typeAlias alias="ReviewAlias" type="com.yiban.bean.ReviewBean" />
+		<typeAlias alias="PermissionAlias" type="com.yiban.bean.PermissionBean" />
 	</typeAliases>
 
 	<environments default="development">
@@ -50,6 +49,7 @@
 		<mapper resource="mybatis/mapper/ApplyMapper.xml" />
 		<mapper resource="mybatis/mapper/UserMapper.xml" />
 		<mapper resource="mybatis/mapper/RoleMapper.xml" />
+		<mapper resource="mybatis/mapper/ReviewMapper.xml" />
 		<mapper resource="mybatis/mapper/PermissionMapper.xml" />
 	</mappers>
 

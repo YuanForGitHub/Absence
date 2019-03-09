@@ -9,20 +9,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yiban.bean.ApplyBean;
 import com.yiban.bean.ResultBean;
+import com.yiban.bean.ReviewBean;
 import com.yiban.service.ApplyService;
 
 @Controller
 public class ApplyController {
 
-//	@Autowired
-//	ApplyService applyService;
-//	@Autowired
-//	ApplyBean apply;
-
+	
 	@ResponseBody
 	@PostMapping("/apply")
 	public ResultBean create(HttpServletRequest request) {
@@ -49,6 +47,7 @@ public class ApplyController {
 		}
 	}
 	
+	
 	@ResponseBody
 	@DeleteMapping("/apply")
 	public ResultBean deleteById(HttpServletRequest request) {
@@ -57,7 +56,7 @@ public class ApplyController {
 		
 		// service层删除apply
 		String applyId = request.getParameter("applyId");
-		ApplyBean apply = applyService.delete(applyId);
+		ApplyBean apply = applyService.delete(Integer.valueOf(applyId));
 		
 		// 返回操作信息
 		if(apply != null) {
@@ -68,6 +67,7 @@ public class ApplyController {
 		}
 	}
 	
+	
 	@ResponseBody
 	@GetMapping("/apply")
 	public ResultBean selectById(HttpServletRequest request) {
@@ -75,7 +75,7 @@ public class ApplyController {
 		
 		// 查询apply
 		String applyId = request.getParameter("applyId");
-		ApplyBean apply = applyService.select(applyId);
+		ApplyBean apply = applyService.select(Integer.valueOf(applyId));
 		
 		// 返回操作信息
 		if(apply != null) {
@@ -83,6 +83,32 @@ public class ApplyController {
 		}
 		else {
 			return ResultBean.error("查询失败");
+		}
+	}
+	
+	@ResponseBody
+	@PostMapping("/apply/review")
+	public ResultBean review(@RequestParam Integer applyId, @RequestParam Integer userId, @RequestParam(required=false) String description, @RequestParam Integer isPass) {
+		// 获取数据
+//		Integer applyId = Integer.valueOf(request.getParameter("applyId"));
+//		Integer userId = Integer.valueOf(request.getParameter("userId"));
+//		String description = request.getParameter("description");
+//		Integer isPass = Integer.valueOf(request.getParameter("isPass"));
+		
+		// 封装成bean
+		ReviewBean review = new ReviewBean();
+		review.setApplyId(applyId);
+		review.setUserId(userId);
+		review.setDescription(description);
+		review.setIsPass(isPass);
+		
+		// 传递给service层执行
+		ApplyService applyService = new ApplyService();
+		if(applyService.review(review)) {
+			return ResultBean.success();
+		}
+		else {
+			return ResultBean.error("审核失败");
 		}
 	}
 }

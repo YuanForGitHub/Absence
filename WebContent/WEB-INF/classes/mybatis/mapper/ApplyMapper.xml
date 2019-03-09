@@ -63,5 +63,20 @@
 		applyId = #{applyId:INTEGER}
 	</delete>
 
+	<update id="doUpdate" parameterType="ApplyAlias">
+		UPDATE apply SET
+		activity = #{activity,jdbcType=VARCHAR},
+		department = #{department,jdbcType=VARCHAR},
+		job = #{job,jdbcType=VARCHAR},
+		name = #{name,jdbcType=VARCHAR},
+		phone = #{phone,jdbcType=VARCHAR},
+		startTime = #{startTime},
+		endTime = #{endTime},
+		reason = #{reason,jdbcType=VARCHAR},
+		other = #{other, jdbcType=VARCHAR},
+		isPass = #{isPass}
+		WHERE
+		applyId = #{applyId,jdbcType=INTEGER}
+	</update>
 
 </mapper>
