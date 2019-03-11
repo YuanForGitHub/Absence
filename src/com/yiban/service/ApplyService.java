@@ -60,5 +60,4 @@ public class ApplyService {
 		// 审核失败
 		return false;
 	}
-	
 }

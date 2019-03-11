@@ -7,6 +7,8 @@
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
 
+
+
 	<!--jackson配置 -->
 	<mvc:annotation-driven />
 	<!-- 配置springMVC的json返回格式 -->
@@ -49,14 +51,14 @@
 	<mvc:default-servlet-handler />
 
 	<!-- mvc拦截器 -->
-	<!-- <mvc:interceptors>
+	<mvc:interceptors>
 		<mvc:interceptor>
-			拦截指定接口
+			<!-- 拦截指定接口 -->
 			<mvc:mapping path="/**" />
-			排除拦截接口
-			<mvc:exclude-mapping path="/users/login" />
-			拦截器位置
-			<bean class="com.isoft.interceptor.TokenInterceptor"></bean>
+			<!-- 排除拦截接口 -->
+			<!-- <mvc:exclude-mapping path="/users/login" /> -->
+			<!-- 拦截器位置 -->
+			<bean class="com.yiban.interceptor.TokenInterceptor"></bean>
 		</mvc:interceptor>
-	</mvc:interceptors> -->
+	</mvc:interceptors>
 </beans>

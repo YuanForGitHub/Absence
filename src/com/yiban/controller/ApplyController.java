@@ -67,7 +67,11 @@ public class ApplyController {
 		}
 	}
 	
-	
+	/**
+	 * 给定申请id查询
+	 * @param request
+	 * @return
+	 */
 	@ResponseBody
 	@GetMapping("/apply")
 	public ResultBean selectById(HttpServletRequest request) {
@@ -86,14 +90,10 @@ public class ApplyController {
 		}
 	}
 	
+	
 	@ResponseBody
 	@PostMapping("/apply/review")
 	public ResultBean review(@RequestParam Integer applyId, @RequestParam Integer userId, @RequestParam(required=false) String description, @RequestParam Integer isPass) {
-		// 获取数据
-//		Integer applyId = Integer.valueOf(request.getParameter("applyId"));
-//		Integer userId = Integer.valueOf(request.getParameter("userId"));
-//		String description = request.getParameter("description");
-//		Integer isPass = Integer.valueOf(request.getParameter("isPass"));
 		
 		// 封装成bean
 		ReviewBean review = new ReviewBean();
