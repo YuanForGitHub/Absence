@@ -13,13 +13,21 @@
 <mapper namespace="User">
 
 	<resultMap type="UserAlias" id="UserResult">
-		<id column="userId" jdbcType="INTEGER" property="id" />
+		<id column="userId" jdbcType="INTEGER" property="userId" />
 		<result column="userName" jdbcType="VARCHAR"
-			property="username" />
-		<result column="department" jdbcType="VARCHAR"
-			property="password.encrypted" />
-		<result column="administrator" jdbcType="BOOLEAN"
-			property="administrator" />
+			property="userName" />
+		<result column="phone" jdbcType="VARCHAR"
+			property="phone" />
+		<result column="password" jdbcType="VARCHAR"
+			property="password" />
+		<!-- <result column="departmentId" property="department.departmentId"/>
+		<result column="departmentName" property="department.departmentName" /> -->
+		
+		<!-- 映射关联对象 -->
+		<association property="department" javaType="com.yiban.bean.DepartmentBean">
+			<id column="departmentId" property="departmentId"/>
+			<result column="departmentName" property="departmentName"/>
+		</association>
 	</resultMap>
 
 	<insert id="doCreate" parameterType="UserAlias"
@@ -28,25 +36,31 @@
 		(
 		userName,
 		password,
-		phone
+		phone,
+		departmentId
 		)
 		VALUES
 		(
 		#{userName, jdbcType=VARCHAR},
 		#{password,jdbcType=VARCHAR},
 		#{phone,jdbcType=VARCHAR}
+		#{department.departmentId, jdbcType=INTEGER}
 		)
 	</insert>
 
 	<select id="doSelect" parameterType="int"
-		resultType="UserAlias">
+		resultMap="UserResult">
 		SELECT userId,
-		userName,
-		phone FROM
-		user WHERE userId = #{userId,jdbcType=INTEGER}
+			userName,
+			phone,
+			d.departmentId as departmentId,
+			d.departmentName as departmentName 
+		FROM
+			user u join department d ON u.departmentId = d.departmentId  
+		WHERE userId = #{userId,jdbcType=INTEGER}
 	</select>
 	
-		<delete id="doDelete" parameterType="int">
+	<delete id="doDelete" parameterType="int">
 		DELETE FROM user WHERE
 		userId = #{userId:INTEGER}
 	</delete>

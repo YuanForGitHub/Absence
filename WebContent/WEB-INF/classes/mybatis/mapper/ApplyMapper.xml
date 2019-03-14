@@ -11,40 +11,64 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="Apply">
+	<!-- column表示的是下方SQL语句查询结果的字段名， property表示的是结果映射的bean对象的属性名 -->
+	<resultMap type="ApplyAlias" id="ApplyResult">
+		<id column="applyId" jdbcType="INTEGER" property="applyId" />
+		<result column="activity" jdbcType="VARCHAR"
+			property="activity" />
+		<result column="job" jdbcType="BOOLEAN" property="job" />
+		<result column="name" jdbcType="VARCHAR" property="name" />
+		<result column="phone" jdbcType="VARCHAR" property="phone" />
+		<result column="startTime" jdbcType="TIMESTAMP"
+			property="startTime" />
+		<result column="endTime" jdbcType="TIMESTAMP"
+			property="endTime" />
+		<result column="other" jdbcType="VARCHAR" property="other" />
+		<result column="created_at" jdbcType="TIMESTAMP"
+			property="created_at" />
+		<result column="isPass" jdbcType="TIMESTAMP" property="isPass" />
+		<result column="description" jdbcType="TIMESTAMP"
+			property="description" />
+
+		<!-- department关联对象 -->
+		<association property="department" javaType="com.yiban.bean.DepartmentBean">
+			<id column="departmentId" property="departmentId"/>
+			<result column="departmentName" property="departmentName"/>
+		</association>
+		
+		<!-- department级联映射 -->
+		<!-- <result column="departmentId" property="department.departmentId" />
+		<result column="departmentName" property="department.departmentName" /> -->
+	</resultMap>
+
+	<select id="doSelect" parameterType="int"
+		resultMap="ApplyResult">
+		SELECT
+			applyId,
+			activity,
+			job,
+			name,
+			phone,
+			startTime,
+			endTime,
+			reason,
+			other,
+			created_at,
+			isPass,
+			description,
+			d.departmentId as departmentId,
+			d.departmentName as departmentName
+		FROM apply a
+			join department d on a.departmentId = d.departmentId
+		WHERE
+			applyId = #{applyId,jdbcType=INTEGER}
+	</select>
 
 	<insert id="doCreate" parameterType="ApplyAlias"
 		useGeneratedKeys="false">
 		INSERT INTO apply
-		( activity,
-		department,
-		job,
-		name,
-		phone,
-		startTime,
-		endTime,
-		reason,
-		other
-		)
-		VALUES
-		(
-		#{activity,
-		jdbcType=VARCHAR},
-		#{department,jdbcType=VARCHAR},
-		#{job,jdbcType=VARCHAR},
-		#{name,jdbcType=VARCHAR},
-		#{phone,jdbcType=VARCHAR},
-		#{startTime,jdbcType=TIMESTAMP},
-		#{endTime,jdbcType=TIMESTAMP},
-		#{reason,jdbcType=VARCHAR},
-		#{other,jdbcType=VARCHAR}
-		)
-	</insert>
-
-	<select id="doSelect" parameterType="int"
-		resultType="ApplyAlias">
-		SELECT applyId,
-		activity,
-		department,
+		(activity,
+		departmentId,
 		job,
 		name,
 		phone,
@@ -52,11 +76,23 @@
 		endTime,
 		reason,
 		other,
-		created_at,
-		isPass,
-		description FROM
-		apply WHERE applyId = #{applyId,jdbcType=INTEGER}
-	</select>
+		departmentId
+		)
+		VALUES
+		(
+		#{activity,
+		jdbcType=VARCHAR},
+		#{department.departmentId,jdbcType=INTEGER},
+		#{job,jdbcType=VARCHAR},
+		#{name,jdbcType=VARCHAR},
+		#{phone,jdbcType=VARCHAR},
+		#{startTime,jdbcType=TIMESTAMP},
+		#{endTime,jdbcType=TIMESTAMP},
+		#{reason,jdbcType=VARCHAR},
+		#{other,jdbcType=VARCHAR},
+		#{department.departmentId,jdbcType=INTEGER}
+		)
+	</insert>
 
 	<delete id="doDelete" parameterType="int">
 		DELETE FROM apply WHERE
@@ -65,18 +101,18 @@
 
 	<update id="doUpdate" parameterType="ApplyAlias">
 		UPDATE apply SET
-		activity = #{activity,jdbcType=VARCHAR},
-		department = #{department,jdbcType=VARCHAR},
-		job = #{job,jdbcType=VARCHAR},
-		name = #{name,jdbcType=VARCHAR},
-		phone = #{phone,jdbcType=VARCHAR},
-		startTime = #{startTime},
-		endTime = #{endTime},
-		reason = #{reason,jdbcType=VARCHAR},
-		other = #{other, jdbcType=VARCHAR},
-		isPass = #{isPass}
+			activity = #{activity,jdbcType=VARCHAR},
+			departmentId = #{department.departmentId,jdbcType=INTEGER},
+			job = #{job,jdbcType=VARCHAR},
+			name = #{name,jdbcType=VARCHAR},
+			phone = #{phone,jdbcType=VARCHAR},
+			startTime = #{startTime},
+			endTime = #{endTime},
+			reason = #{reason,jdbcType=VARCHAR},
+			other = #{other,jdbcType=VARCHAR},
+			isPass = #{isPass}
 		WHERE
-		applyId = #{applyId,jdbcType=INTEGER}
+			applyId = #{applyId,jdbcType=INTEGER}
 	</update>
 
 </mapper>

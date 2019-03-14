@@ -30,9 +30,12 @@ public class JWTUtil {
 		long nowMillis = System.currentTimeMillis();
 		Date now = new Date(nowMillis);
 
-		// JWT生成类,此时设置iat,以及根据传入的id设置token
-		JwtBuilder builder = Jwts.builder().setId(subject).setIssuedAt(now);
+		// JWT生成类,设置生成时间
+		JwtBuilder builder = Jwts.builder().setIssuedAt(now);
 
+		// 加入subject
+		builder.setSubject(subject);
+		
 		// 由于Payload是非必须加入的,所以此处省略
 
 		// 进行签名,生成Signature

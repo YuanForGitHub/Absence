@@ -1,24 +1,10 @@
 package com.yiban.dao;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.Statement;
-import java.sql.Timestamp;
-
 import org.apache.ibatis.session.SqlSession;
-import org.springframework.stereotype.Repository;
 
-import com.sun.jmx.snmp.SnmpUnknownSubSystemException;
-import com.sun.org.apache.bcel.internal.generic.RETURN;
 import com.yiban.bean.ApplyBean;
 import com.yiban.db.DBAccess;
 
-
-@Repository
-/**
- * apply相关的数据库操作
- */
 public class ApplyDao {
 	/**
 	 * 添加申请信息
@@ -28,7 +14,7 @@ public class ApplyDao {
 		DBAccess dbAccess = new DBAccess();
 		SqlSession sqlSession = null;
 		int result = 0;
-		
+
 		try {
 			sqlSession = dbAccess.getSqlSession();
 			// 通过sqlsession执行SQL语句
@@ -48,7 +34,7 @@ public class ApplyDao {
 		DBAccess dbAccess = new DBAccess();
 		SqlSession sqlSession = null;
 		ApplyBean apply = null;
-		
+
 		try {
 			// 获取数据库连接会话
 			sqlSession = dbAccess.getSqlSession();
@@ -64,15 +50,15 @@ public class ApplyDao {
 				sqlSession.close();
 			}
 		}
-		
+
 		return apply;
 	}
-	
+
 	public int doDelete(Integer applyId) {
 		DBAccess dbAccess = new DBAccess();
 		SqlSession sqlSession = null;
 		int result = 0;
-		
+
 		try {
 			// 获取数据库连接会话
 			sqlSession = dbAccess.getSqlSession();
@@ -87,7 +73,7 @@ public class ApplyDao {
 				sqlSession.close();
 			}
 		}
-		
+
 		return result;
 	}
 
@@ -95,7 +81,7 @@ public class ApplyDao {
 		DBAccess dbAccess = new DBAccess();
 		SqlSession sqlSession = null;
 		int result = 0;
-		
+
 		try {
 			// 获取数据库连接会话
 			sqlSession = dbAccess.getSqlSession();
@@ -110,7 +96,7 @@ public class ApplyDao {
 				sqlSession.close();
 			}
 		}
-		
+
 		return result;
 	}
 }

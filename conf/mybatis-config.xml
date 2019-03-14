@@ -25,6 +25,7 @@
 		<typeAlias alias="ApplyAlias" type="com.yiban.bean.ApplyBean" />
 		<typeAlias alias="ReviewAlias" type="com.yiban.bean.ReviewBean" />
 		<typeAlias alias="PermissionAlias" type="com.yiban.bean.PermissionBean" />
+		<typeAlias alias="DepartmentAlias" type="com.yiban.bean.DepartmentBean" />
 	</typeAliases>
 
 	<environments default="development">
@@ -50,6 +51,7 @@
 		<mapper resource="mybatis/mapper/UserMapper.xml" />
 		<mapper resource="mybatis/mapper/RoleMapper.xml" />
 		<mapper resource="mybatis/mapper/ReviewMapper.xml" />
+		<mapper resource="mybatis/mapper/DepartmentMapper.xml"/>
 		<mapper resource="mybatis/mapper/PermissionMapper.xml" />
 	</mappers>
 
