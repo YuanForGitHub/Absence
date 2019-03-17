@@ -8,6 +8,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.yiban.util.JWTUtil;
 
+/**
+ * token拦截器，
+ * 用于JWT登录验证
+ */
 public class TokenInterceptor implements HandlerInterceptor {
 
 	@Override

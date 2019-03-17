@@ -10,7 +10,7 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="User">
+<mapper namespace="com.yiban.dao.UserMapper">
 
 	<resultMap type="UserAlias" id="UserResult">
 		<id column="userId" jdbcType="INTEGER" property="userId" />

@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.sun.corba.se.spi.orbutil.fsm.Guard.Result;
 import com.yiban.bean.ResultBean;
 import com.yiban.bean.UserBean;
-import com.yiban.dao.UserDao;
 import com.yiban.service.UserService;
 
 /**
@@ -49,7 +48,7 @@ public class UserController {
 		UserService userService = new UserService();
 		
 		String userId = request.getParameter("userId");
-		UserBean user = userService.delete(userId);
+		UserBean user = userService.delete(Integer.valueOf(userId));
 		
 		// 调用service层删除
 		if(user != null) {
@@ -67,7 +66,7 @@ public class UserController {
 		
 		// 查询选定用户
 		String userId = request.getParameter("userId");
-		UserBean user = userService.select(userId);
+		UserBean user = userService.select(Integer.valueOf(userId));
 		
 		// 调用service层删除
 		if(user != null) {

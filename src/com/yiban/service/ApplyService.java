@@ -1,63 +1,121 @@
 package com.yiban.service;
 
+import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.yiban.bean.ApplyBean;
 import com.yiban.bean.ReviewBean;
-import com.yiban.dao.ApplyDao;
-import com.yiban.dao.ReviewDao;
+import com.yiban.dao.ApplyMapper;
+import com.yiban.dao.ReviewMapper;
+import com.yiban.db.DBAccess;
 
 @Service
 public class ApplyService {
-
-//	@Autowired
-//	private ApplyDao applyDao;
+	
+	
 	
 	public boolean insert(ApplyBean apply) {
-		ApplyDao applyDao = new ApplyDao();
-		return applyDao.doCreate(apply) > 0 ? true : false;
-	}
-	
-	public ApplyBean select(Integer applyId) {
-		ApplyDao applyDao = new ApplyDao();
-		return applyDao.doSelect(applyId);
-	}
-	
-	public ApplyBean delete(Integer applyId) {
-		// 被删除的apply
-		ApplyDao applyDao = new ApplyDao();
-		ApplyBean apply = applyDao.doSelect(applyId);
-		
-		// 删除选定的apply
-		applyDao.doDelete(applyId);
-		
-		// 返回被删除的apply
-		return apply;
-	}
-	
-	public boolean review(ReviewBean review) {
-		// 查询被审核申请
-		ApplyDao applyDao = new ApplyDao();
-		ApplyBean apply = applyDao.doSelect(review.getApplyId());
-		
-		// 保存审核结果
-		apply.setIsPass(review.getIsPass());
-		apply.setDescription(review.getDescription());
-		
-		// 更新bean对象
-		int result = applyDao.doUpdate(apply);
-		
-		// 记录审核情况
-		if(result > 0) {
-			ReviewDao reviewDao = new ReviewDao();
-			// 记录成功
-			if(reviewDao.doCreate(review) > 0) {
-				return true;
+		SqlSession sqlSession = null;
+		int result = 0;
+		try {
+			// 获取数据库连接会话
+			sqlSession = new DBAccess().getSqlSession();
+			// 获取映射对象
+			ApplyMapper mapper = sqlSession.getMapper(ApplyMapper.class);
+			// 执行SQL语句
+			result = mapper.doCreate(apply);
+		} catch (Exception e) {
+			System.out.println(e);
+			return false;
+		} finally {
+			if(sqlSession != null) {
+				sqlSession.close();
 			}
 		}
 		
-		// 审核失败
-		return false;
+		return ((result > 0) ? true : false); 
+	}
+	
+	public ApplyBean select(Integer applyId) {
+		SqlSession sqlsession = null;
+		ApplyBean apply = null;
+		try {
+			// 获取数据库连接会话
+			SqlSession sqlSession = new DBAccess().getSqlSession();
+			// 获取映射对象
+			ApplyMapper mapper = sqlSession.getMapper(ApplyMapper.class);
+			// 执行SQL语句
+			apply = mapper.doSelect(applyId);
+		} catch (Exception e) {
+			System.out.println(e);
+			return apply;
+		} finally {
+			if(sqlsession != null) {
+				sqlsession.close();
+			}
+		}
+		
+		return apply; 
+	}
+	
+	public ApplyBean delete(Integer applyId) {
+		SqlSession sqlsession = null;
+		ApplyBean apply = null;
+		int result = 0;
+		try {
+			// 获取数据库连接会话
+			SqlSession sqlSession = new DBAccess().getSqlSession();
+			// 获取映射对象
+			ApplyMapper mapper = sqlSession.getMapper(ApplyMapper.class);
+			// 查询要删除对象
+			apply = mapper.doSelect(applyId);
+			// 执行删除
+			result = mapper.doDelete(applyId);
+		} catch (Exception e) {
+			System.out.println(e);
+			return apply;
+		} finally {
+			if(sqlsession != null) {
+				sqlsession.close();
+			}
+		}
+		
+		return result > 0 ? apply : null;
+	}
+	
+	public boolean review(ReviewBean review) {
+		SqlSession sqlSession = null;
+		ApplyBean apply = null;
+		int result = 0;
+		try {
+			// 获取数据库连接会话
+			sqlSession = new DBAccess().getSqlSession();
+			ApplyMapper mapper = sqlSession.getMapper(ApplyMapper.class);
+			
+			// 查询被审核申请
+			apply = mapper.doSelect(review.getApplyId());
+			
+			// 保存审核结果
+			apply.setIsPass(review.getIsPass());
+			apply.setDescription(review.getDescription());
+			
+			// 更新bean对象
+			result = mapper.doUpdate(apply);
+			
+			// 记录审核情况
+			if(result > 0) {
+				ReviewMapper reviewMapper = sqlSession.getMapper(ReviewMapper.class);
+				result = reviewMapper.doCreate(review);
+			}
+			
+		} catch (Exception e) {
+			System.out.println(e);
+			return false;
+		} finally {
+			sqlSession.close();
+		}
+		
+		return (result > 0 ? true : false);
 	}
 }

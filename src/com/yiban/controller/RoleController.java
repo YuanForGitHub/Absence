@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yiban.bean.ResultBean;
@@ -37,12 +38,11 @@ public class RoleController {
 	
 	@ResponseBody
 	@DeleteMapping("/role")
-	public ResultBean deleteById(HttpServletRequest request) {
+	public ResultBean deleteById(@RequestParam Integer roleId) {
 		
 		RoleService roleService = new RoleService();
 		
 		// service层删除role
-		String roleId = request.getParameter("roleId");
 		RoleBean role = roleService.delete(roleId);
 		
 		// 返回操作信息
@@ -57,11 +57,11 @@ public class RoleController {
 
 	@ResponseBody
 	@GetMapping("/role")
-	public ResultBean selectById(HttpServletRequest request) {
+	public ResultBean selectById(@RequestParam Integer roleId) {
 		RoleService roleService = new RoleService();
 		
 		// 查询给定id的role
-		RoleBean role = roleService.select(request.getParameter("roleId"));
+		RoleBean role = roleService.select(roleId);
 		
 		// 返回操作信息
 		if(role != null) {

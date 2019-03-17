@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yiban.bean.ResultBean;
@@ -40,11 +41,11 @@ public class PermissionController {
 	
 	@ResponseBody
 	@DeleteMapping("/permission")
-	public ResultBean deleteById(HttpServletRequest request) {
+	public ResultBean deleteById(@RequestParam(required=true) Integer permissionId) {
 		PermissionService permissionService = new PermissionService();
 		
 		// 调用service层删除
-		PermissionBean permission = permissionService.delete(request.getParameter("permissionId"));
+		PermissionBean permission = permissionService.delete(permissionId);
 		
 		// 返回操作信息
 		if(permission != null) {
@@ -54,5 +55,21 @@ public class PermissionController {
 			return ResultBean.error("删除权限失败");
 		}
 		
+	}
+	
+	
+	public ResultBean selectById(@RequestParam(required=true) Integer permissionId) {
+		PermissionService permissionService = new PermissionService();
+		
+		// 调用service层查询
+		PermissionBean permission = permissionService.select(permissionId);
+		
+		// 返回操作信息
+		if(permission != null) {
+			return ResultBean.success().add("permission", permission);
+		}
+		else {
+			return ResultBean.error("查询权限失败");
+		}
 	}
 }

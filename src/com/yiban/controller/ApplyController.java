@@ -18,6 +18,7 @@ import com.yiban.bean.ResultBean;
 import com.yiban.bean.ReviewBean;
 import com.yiban.service.ApplyService;
 import com.yiban.service.DepartmentService;
+import com.yiban.service.UserService;
 
 @Controller
 public class ApplyController {
@@ -93,7 +94,7 @@ public class ApplyController {
 			return ResultBean.error("查询失败");
 		}
 	}
-
+	
 	@ResponseBody
 	@PostMapping("/apply/review")
 	public ResultBean review(@RequestParam Integer applyId, @RequestParam Integer userId,
