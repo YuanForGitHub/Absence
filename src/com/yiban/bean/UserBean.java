@@ -1,5 +1,7 @@
 package com.yiban.bean;
 
+import java.util.List;
+
 import com.yiban.bean.DepartmentBean;
 
 public class UserBean {
@@ -8,7 +10,9 @@ public class UserBean {
 	private String phone;
 	private String password;
 	private DepartmentBean department;
+	private List<RoleBean> roles;
 	
+
 	public String getUserId() {
 		return userId;
 	}
@@ -39,6 +43,13 @@ public class UserBean {
 	public void setDepartment(DepartmentBean department) {
 		this.department = department;
 	}
+	public List<RoleBean> getRoles() {
+		return roles;
+	}
+	public void setRoles(List<RoleBean> roles) {
+		this.roles = roles;
+	}
+	
 	@Override
 	public String toString() {
 		return "UserBean [userId=" + userId + ", userName=" + userName + ", phone=" + phone + ", password=" + password

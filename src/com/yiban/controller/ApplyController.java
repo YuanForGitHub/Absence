@@ -1,5 +1,7 @@
 package com.yiban.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.sun.corba.se.spi.orbutil.fsm.Guard.Result;
 import com.yiban.bean.ApplyBean;
 import com.yiban.bean.DepartmentBean;
 import com.yiban.bean.ResultBean;
@@ -31,9 +34,7 @@ public class ApplyController {
 
 		// 查找对应的department
 		DepartmentService departmentService = new DepartmentService();
-		DepartmentBean department = departmentService.select(
-				Integer.valueOf(request.getParameter("departmentId"))
-			);
+		DepartmentBean department = departmentService.select(Integer.valueOf(request.getParameter("departmentId")));
 
 		// 赋值给applyBean
 		apply.setActivity(request.getParameter("activity"));
@@ -94,7 +95,22 @@ public class ApplyController {
 			return ResultBean.error("查询失败");
 		}
 	}
-	
+
+	@ResponseBody
+	@GetMapping("/apply")
+	public ResultBean selectByUser(@RequestParam Integer userId) {
+		// 调用service层查询
+		ApplyService applyService = new ApplyService();
+		List<ApplyBean> applys = applyService.selectByUser(userId);
+
+		// 返回操作信息
+		if (applys != null && !applys.isEmpty()) {
+			return ResultBean.success().add("applys", applys);
+		} else {
+			return ResultBean.error("查询失败");
+		}
+	}
+
 	@ResponseBody
 	@PostMapping("/apply/review")
 	public ResultBean review(@RequestParam Integer applyId, @RequestParam Integer userId,

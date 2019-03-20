@@ -23,11 +23,23 @@
 		<!-- <result column="departmentId" property="department.departmentId"/>
 		<result column="departmentName" property="department.departmentName" /> -->
 		
-		<!-- 映射关联对象 -->
+		<!-- 映射关联对象：部门 -->
 		<association property="department" javaType="com.yiban.bean.DepartmentBean">
 			<id column="departmentId" property="departmentId"/>
 			<result column="departmentName" property="departmentName"/>
 		</association>
+		
+		<!-- 映射多对多对象：角色 -->
+		<collection property="roles" ofType="RoleAlias">
+		    <id property="roleId" column="roleId"/>
+		    <result property="roleName" column="roleName"/>
+
+		    <!-- 映射多对多对象：权限 -->
+		    <collection property="permissions" ofType="PermissionAlias">
+		    	<id property="permissionId" column="permissionId"/>
+		    	<result property="permissionName" column="permissionName"/>
+		    </collection>
+	  	</collection>
 	</resultMap>
 
 	<insert id="doCreate" parameterType="UserAlias"
@@ -53,11 +65,21 @@
 		SELECT userId,
 			userName,
 			phone,
-			d.departmentId as departmentId,
-			d.departmentName as departmentName 
+			departmentId,
+			departmentName,
+			roleId,
+			roleName,
+			permissionId,
+			permissionName
 		FROM
-			user u join department d ON u.departmentId = d.departmentId  
-		WHERE userId = #{userId,jdbcType=INTEGER}
+			user natural join 
+			department natural join 
+			user_role natural join 
+			role natural join 
+			role_permission natural join 
+			permission
+		WHERE 
+			userId = #{userId}
 	</select>
 	
 	<delete id="doDelete" parameterType="int">

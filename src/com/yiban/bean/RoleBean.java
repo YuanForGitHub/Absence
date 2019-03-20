@@ -1,8 +1,11 @@
 package com.yiban.bean;
 
+import java.util.List;
+
 public class RoleBean {
 	private int roleId;
 	private String roleName;
+	private List<PermissionBean> permissions;
 	
 	public RoleBean() {
 		super();
@@ -19,6 +22,12 @@ public class RoleBean {
 	}
 	public void setRoleName(String roleName) {
 		this.roleName = roleName;
+	}
+	public List<PermissionBean> getPermissions() {
+		return permissions;
+	}
+	public void setPermissions(List<PermissionBean> permissions) {
+		this.permissions = permissions;
 	}
 	
 }

@@ -63,7 +63,95 @@
 		WHERE
 			applyId = #{applyId,jdbcType=INTEGER}
 	</select>
-
+	
+	<!-- 权限1：审核干事值班请假 -->
+	<select id="permissionOne" parameterType="int"
+		resultMap="ApplyResult">
+		SELECT 
+			applyId, 
+			activity, 
+			job, 
+			name, 
+			phone, 
+			startTime, 
+			endTime, 
+			other, 
+			created_at, 
+			isPass, 
+			description, 
+			departmentName 
+		FROM 
+			apply natural join department 
+		WHERE 
+			departmentId = #{departmentId} and activity like "%值班%" and job like "%干事%";
+	</select>
+	
+	<!-- 权限2：审核干部值班请假 -->
+	<select id="permissionTwo" parameterType="int"
+		resultMap="ApplyResult">
+		SELECT 
+			applyId, 
+			activity, 
+			job, 
+			name, 
+			phone, 
+			startTime, 
+			endTime, 
+			other, 
+			created_at, 
+			isPass, 
+			description, 
+			departmentName 
+		FROM 
+			apply natural join department 
+		WHERE 
+			activity like "%值班%" and job not like "%干事%";
+	</select>
+	
+	<!-- 权限3：审核干事会议活动请假 -->
+	<select id="permissionThree" parameterType="int"
+		resultMap="ApplyResult">
+		SELECT 
+			applyId, 
+			activity, 
+			job, 
+			name, 
+			phone, 
+			startTime, 
+			endTime, 
+			other, 
+			created_at, 
+			isPass, 
+			description, 
+			departmentName 
+		FROM 
+			apply natural join department 
+		WHERE 
+			departmentId = #{departmentId} and activity not like "%值班%" and job like "%干事%";
+	</select>
+	
+	<!-- 权限4：审核干部会议活动请假 -->
+	<select id="permissionFour" parameterType="int"
+		resultMap="ApplyResult">
+		SELECT 
+			applyId, 
+			activity, 
+			job, 
+			name, 
+			phone, 
+			startTime, 
+			endTime, 
+			other, 
+			created_at, 
+			isPass, 
+			description, 
+			departmentName 
+		FROM 
+			apply natural join department 
+		WHERE 
+			activity not like "%值班%" and job not like "%干事%";
+	</select>
+	
 	<insert id="doCreate" parameterType="ApplyAlias"
 		useGeneratedKeys="false">
 		INSERT INTO apply
@@ -114,5 +202,5 @@
 		WHERE
 			applyId = #{applyId,jdbcType=INTEGER}
 	</update>
-
+	
 </mapper>
