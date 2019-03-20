@@ -102,6 +102,8 @@ public class ApplyService {
 				case 4:
 					applys.addAll(sqlSession.getMapper(ApplyMapper.class).permissionFour(departmentId));
 					break;
+				default:
+					break;
 				}
 			}
 		} catch (Exception e) {

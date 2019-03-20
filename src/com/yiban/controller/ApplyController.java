@@ -96,8 +96,14 @@ public class ApplyController {
 		}
 	}
 
+	/**
+	 * 根据当前用户的权限，
+	 * 返回可以审核的申请
+	 * @param userId
+	 * @return
+	 */
 	@ResponseBody
-	@GetMapping("/apply")
+	@GetMapping("/user/apply")
 	public ResultBean selectByUser(@RequestParam Integer userId) {
 		// 调用service层查询
 		ApplyService applyService = new ApplyService();
@@ -130,5 +136,19 @@ public class ApplyController {
 		} else {
 			return ResultBean.error("审核失败");
 		}
+	}
+	
+	@ResponseBody
+	@GetMapping("/apply/testone")
+	public ResultBean testone() {
+		System.out.println("testone");
+		return ResultBean.success();
+	}
+	
+	@ResponseBody
+	@GetMapping("/apply/testtwo")
+	public ResultBean testotwo() {
+		System.out.println("testtwo");
+		return ResultBean.success();
 	}
 }

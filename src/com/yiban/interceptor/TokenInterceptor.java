@@ -59,7 +59,9 @@ public class TokenInterceptor implements HandlerInterceptor {
 		System.out.println("real token:=="+headerToken);
         System.out.println("real Cookie:=="+request.getHeader("Cookie"));
 		
-		return false;
+        // 将token加入返回页面的header
+        response.setHeader("token",headerToken);
+		return true;
 	}
 
 }

@@ -23,7 +23,7 @@ public class PermissionController {
 	
 	@ResponseBody
 	@PostMapping("/permission")
-	public ResultBean create(HttpServletRequest request) {
+	private ResultBean create(HttpServletRequest request) {
 		PermissionService permissionService = new PermissionService();
 		PermissionBean permission = new PermissionBean();
 		
@@ -41,7 +41,7 @@ public class PermissionController {
 	
 	@ResponseBody
 	@DeleteMapping("/permission")
-	public ResultBean deleteById(@RequestParam(required=true) Integer permissionId) {
+	private ResultBean deleteById(@RequestParam(required=true) Integer permissionId) {
 		PermissionService permissionService = new PermissionService();
 		
 		// 调用service层删除
@@ -58,7 +58,7 @@ public class PermissionController {
 	}
 	
 	
-	public ResultBean selectById(@RequestParam(required=true) Integer permissionId) {
+	private ResultBean selectById(@RequestParam(required=true) Integer permissionId) {
 		PermissionService permissionService = new PermissionService();
 		
 		// 调用service层查询
@@ -71,5 +71,15 @@ public class PermissionController {
 		else {
 			return ResultBean.error("查询权限失败");
 		}
+	}
+	
+	/**
+	 * 权限不足
+	 * 禁止访问
+	 * 用作提示页
+	 * @return
+	 */
+	public ResultBean perventAccess() {
+		return ResultBean.error("访问权限不足");
 	}
 }

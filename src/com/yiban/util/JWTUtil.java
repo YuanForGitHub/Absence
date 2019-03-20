@@ -3,6 +3,8 @@ package com.yiban.util;
 import java.security.Key;
 import java.util.Date;
 
+import javax.servlet.http.HttpServletRequest;
+
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
@@ -19,10 +21,13 @@ public class JWTUtil {
 	// 而payload又包含几个部分,issuer签发者,subject面向用户,iat签发时间,exp过期时间,aud接收方。
 	public final static long keeptime = 1800000;
 
+	/**
+	 * generate a new token for auth
+	 */
 	public static String generToken(String subject) {
 
 		long ttlMillis = keeptime;
-		
+
 		// 使用Hash256算法进行加密
 		SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
 
@@ -35,7 +40,7 @@ public class JWTUtil {
 
 		// 加入subject
 		builder.setSubject(subject);
-		
+
 		// 由于Payload是非必须加入的,所以此处省略
 
 		// 进行签名,生成Signature
@@ -44,6 +49,7 @@ public class JWTUtil {
 		if (ttlMillis >= 0) {
 			long expMillis = nowMillis + ttlMillis;
 			Date exp = new Date(expMillis);
+			// 设置token过期时间
 			builder.setExpiration(exp);
 		}
 
@@ -67,10 +73,15 @@ public class JWTUtil {
 		return generToken(subject);
 	}
 
+	/**
+	 * 用于验证token签名验证
+	 * 
+	 * @param token
+	 * @return
+	 */
 	public static Claims verifyToken(String token) {
 		// 将token解密出来,将payload信息包装成Claims类返回
-		Claims claims = Jwts.parser().setSigningKey(sercetKey)
-				.parseClaimsJws(token).getBody();
+		Claims claims = Jwts.parser().setSigningKey(sercetKey).parseClaimsJws(token).getBody();
 
 		return claims;
 	}

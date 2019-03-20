@@ -33,15 +33,8 @@ public class JunitTest extends TestCase {
 
 	@Test
 	public void testPrintMessage() throws Exception {
-		// 调用service层查询
-		ApplyService applyService = new ApplyService();
-		List<ApplyBean> applys = applyService.selectByUser(1);
-
-		// 返回操作信息
-		if (applys != null && !applys.isEmpty()) {
-			for(int i=0; i<applys.size(); i++) {
-				System.out.println(applys.get(i).getApplyId());
-			}
-		}
+		String token = JWTUtil.generToken("1");
+		Claims claim = JWTUtil.verifyToken(token);
+		System.out.println(token);
 	}
 }

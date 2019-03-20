@@ -21,37 +21,42 @@ public class RoleController {
 	@ResponseBody
 	@PostMapping("/role")
 	public ResultBean create(HttpServletRequest request) {
-		RoleService roleService = new RoleService();
-		RoleBean role = new RoleBean();
-		
-		// 构造RoleBean
-		role.setRoleName(request.getParameter("roleName"));
-		
-		// 调用service层插入role
-		if(roleService.insert(role)) {
-			return ResultBean.success().add("role", role);
-		}
-		else {
-			return ResultBean.error("插入角色失败");
-		}
+//		RoleService roleService = new RoleService();
+//		RoleBean role = new RoleBean();
+//		
+//		// 构造RoleBean
+//		role.setRoleName(request.getParameter("roleName"));
+//		
+//		// 调用service层插入role
+//		if(roleService.insert(role)) {
+//			return ResultBean.success().add("role", role);
+//		}
+//		else {
+//			return ResultBean.error("插入角色失败");
+//		}
+		System.out.println("create");
+		return null;
 	}
 	
 	@ResponseBody
 	@DeleteMapping("/role")
 	public ResultBean deleteById(@RequestParam Integer roleId) {
 		
-		RoleService roleService = new RoleService();
-		
-		// service层删除role
-		RoleBean role = roleService.delete(roleId);
-		
-		// 返回操作信息
-		if(role != null) {
-			return ResultBean.success().add("role", role);
-		}
-		else {
-			return ResultBean.error("删除失败");
-		}
+//		System.out.println("delete Id: " + roleId);
+//		RoleService roleService = new RoleService();
+//		
+//		// service层删除role
+//		RoleBean role = roleService.delete(roleId);
+//		
+//		// 返回操作信息
+//		if(role != null) {
+//			return ResultBean.success().add("role", role);
+//		}
+//		else {
+//			return ResultBean.error("删除失败");
+//		}
+		System.out.println("delete");
+		return null;
 	}
 	
 
