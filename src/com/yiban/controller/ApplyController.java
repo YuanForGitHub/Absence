@@ -138,11 +138,14 @@ public class ApplyController {
 		}
 	}
 	
+	@Autowired
+	private ApplyBean applyTest;
+	
 	@ResponseBody
 	@GetMapping("/apply/testone")
 	public ResultBean testone() {
-		System.out.println("testone");
-		return ResultBean.success();
+		System.out.println(applyTest.hashCode());
+		return null;
 	}
 	
 	@ResponseBody

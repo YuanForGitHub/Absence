@@ -52,13 +52,14 @@ public class PermissionAop {
 		HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes())
                 .getRequest();
 		
-		String token = request.getParameter("token");
-		Claims body = JWTUtil.verifyToken(token);
-		System.out.println(body.getSubject());
+		// 获取token
+//		String token = request.getParameter("token");
+//		Claims body = JWTUtil.verifyToken(token);
+//		System.out.println(body.getSubject());
 		
 		// 查询用户信息
-//		int userId = Integer.valueOf(request.getParameter("userId"));
-		int userId = Integer.valueOf(body.getSubject());
+		int userId = Integer.valueOf(request.getParameter("userId"));
+//		int userId = Integer.valueOf(body.getSubject());
 		UserService userService = new UserService();
 		UserBean user = userService.select(userId);
 

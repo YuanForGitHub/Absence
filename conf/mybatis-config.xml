@@ -11,7 +11,7 @@
     "http://mybatis.org/dtd/mybatis-3-config.dtd">
 
 <configuration>
-
+	<!-- 引入资源配置路径下的properties配置文件 -->
 	<properties resource="dbconfig.properties"></properties>
 
 	<settings>

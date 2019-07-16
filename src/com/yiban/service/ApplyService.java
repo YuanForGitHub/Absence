@@ -64,6 +64,10 @@ public class ApplyService {
 		return apply;
 	}
 
+	/**
+	 * 给定userId，返回该用户所能审核的所有申请
+	 * 通过判断部门是否一致，权限是否足够
+	 */
 	public List<ApplyBean> selectByUser(Integer userId) {
 		SqlSession sqlSession = null;
 		List<ApplyBean> applys = new ArrayList<>();

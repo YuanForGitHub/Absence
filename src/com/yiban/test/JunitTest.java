@@ -1,5 +1,6 @@
 package com.yiban.test;
 
+import java.applet.Applet;
 import java.io.IOException;
 import java.security.Key;
 import java.util.ArrayList;
@@ -8,6 +9,7 @@ import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
 import com.yiban.bean.ApplyBean;
@@ -31,10 +33,11 @@ import io.jsonwebtoken.*;
 
 public class JunitTest extends TestCase {
 
+	@Autowired
+	private ApplyBean apply;
+	
 	@Test
 	public void testPrintMessage() throws Exception {
-		String token = JWTUtil.generToken("1");
-		Claims claim = JWTUtil.verifyToken(token);
-		System.out.println(token);
+		System.out.println(apply.hashCode());
 	}
 }
